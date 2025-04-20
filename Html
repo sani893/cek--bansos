@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Status Bantuan Sosial</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cek Status Bantuan Sosial</h1>
+        
+        <form id="bansosForm">
+            <div class="form-group">
+                <label for="nik">Nomor Induk Kependudukan (NIK)</label>
+                <input type="number" id="nik" name="nik" placeholder="Masukkan 16 digit NIK" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nama">Nomor Kartu Keluarga (KK)</label>
+                <input type="number" id="kk" name="kk" placeholder="Masukkan 16 digit Nomor KK" required>
+            </div>
+            
+            <button type="submit">Cek Status</button>
+        </form>
+        
+        <div id="result" class="result">
+            <h3>Hasil Pengecekan</h3>
+            <div id="resultContent"></div>
+        </div>
+        
+        <footer>
+            <p>Layanan resmi pemerintah untuk mengecek status bantuan sosial</p>
+            <p>© 2023 Kementerian Sosial Republik Indonesia</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.getElementById('bansosForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nik = document.getElementById('nik').value;
+            const kk = document.getElementById('kk').value;
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            
+            // Validasi input
+            if (nik.length !== 16 || kk.length !== 16) {
+                resultDiv.className = 'result error';
+                resultContent.innerHTML = '<p>NIK dan Nomor KK harus terdiri dari 16 digit angka.</p>';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            // Simulasi pengecekan (pada implementasi nyata, ini akan diganti dengan API call)
+            setTimeout(() => {
+                // Contoh hasil random untuk simulasi
+                const isEligible = Math.random() > 0.5;
+                const program = ['PKH', 'BLT', 'BPNT', 'BST'][Math.floor(Math.random() * 4)];
+                if (isEligible) {
+                    resultDiv.className = 'result success';
+                    resultContent.innerHTML = `
+                        <p><strong>Status:</strong> Anda terdaftar sebagai penerima bantuan sosial.</p>
+                        <p><strong>Program:</strong> ${program}</p>
+                        <p><strong>Periode:</strong> Januari - Desember 2023</p>
+                        <p><strong>Nominal:</strong> Rp 300.000/bulan</p>
+                        <p><strong>Saluran Penyaluran:</strong> Bank BRI</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultContent.innerHTML = `
+                        <p><strong>Status:</strong> Anda tidak terdaftar sebagai penerima bantuan sosial saat ini.</p>
+                        <p>Jika menurut Anda ini adalah kesalahan, silakan hubungi dinas sosial setempat.</p>
+                    `;
+                }
+                resultDiv.style.display = 'block';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
